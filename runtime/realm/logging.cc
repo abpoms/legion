@@ -164,10 +164,13 @@ namespace Realm {
 
   LoggerConfig::LoggerConfig(void)
     : cmdline_read(false), level(Logger::LEVEL_PRINT), cats_enabled(0), stream(0)
-  {}
+  {
+    printf("LoggerConfig::LoggerConfig\n");
+  }
 
   LoggerConfig::~LoggerConfig(void)
   {
+    printf("LoggerConfig::~LoggerConfig\n");
     if(cats_enabled)
       free(cats_enabled);
 
@@ -176,15 +179,22 @@ namespace Realm {
 
   /*static*/ LoggerConfig *LoggerConfig::get_config(void)
   {
+    static bool a = false;
+    if (!a) {
+      printf("LoggerConfig::get_config (initializing)\n");
+      a = true;
+    }
     static LoggerConfig cfg;
     return &cfg;
   }
 
   /*static*/ void LoggerConfig::flush_all_streams(void)
   {
+    printf("LoggerConfig::flush_all_streams\n");
     LoggerConfig *cfg = get_config();
     if(cfg->stream)
       cfg->stream->flush();
+    printf("  returning\n");
   }
 
   void LoggerConfig::read_command_line(int argc, const char *argv[])
@@ -262,7 +272,7 @@ namespace Realm {
 							    true);
     }
 
-    LoggerConfig::get_config(); // force the static Logger config to be created
+    printf("registering atexit function LoggerConfig::flush_all_streams\n");
     atexit(LoggerConfig::flush_all_streams);
 
     cmdline_read = true;

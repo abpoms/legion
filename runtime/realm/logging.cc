@@ -262,6 +262,7 @@ namespace Realm {
 							    true);
     }
 
+    LoggerConfig::get_config(); // force the static Logger config to be created
     atexit(LoggerConfig::flush_all_streams);
 
     cmdline_read = true;

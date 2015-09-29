@@ -327,11 +327,14 @@ namespace Realm {
   Logger::Logger(const std::string& _name)
     : name(_name), log_level(LEVEL_NONE)
   {
+    printf("Logger::Logger(%p, %s) entry\n", this, _name.c_str());
     LoggerConfig::get_config()->configure(this);
+    printf("Logger::Logger(%p, %s) exit\n", this, _name.c_str());
   }
 
   Logger::~Logger(void)
   {
+    printf("Logger::~Logger(%p) entry\n", this);
     // go through our streams and delete any we're supposed to
     for(std::vector<LogStream>::iterator it = streams.begin();
 	it != streams.end();
@@ -340,6 +343,7 @@ namespace Realm {
 	delete it->s;
 
     streams.clear();
+    printf("Logger::~Logger(%p) exit\n", this);
   }
 
   /*static*/ void Logger::configure_from_cmdline(int argc, const char *argv[])

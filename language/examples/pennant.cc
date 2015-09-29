@@ -964,7 +964,7 @@ void generate_mesh_raw(
 /// Mapper
 ///
 
-LegionRuntime::Logger::Category log_mapper("mapper");
+static LegionRuntime::Logger::Category log_mapper("mapper");
 
 class PennantMapper : public DefaultMapper
 {
